@@ -21,7 +21,7 @@ public class Generator {
         List<String[]> allLines = new ArrayList();
         allLines.add(new String[]{"accountName","traffic", "date","city", "street", "homeNumber"});
         for (int i = 0; i < recordNum; i++) {
-            String[] record = {randomCustomer() + "", randomNum(100, 1000) + "", randomDate(), "City" + randomNum(1, 100), "Street" + randomNum(1, 100), randomNum(1, 100) + ""};
+            String[] record = {randomCustomer() + " " + i, randomNum(1_000_000, 30_000_000) + "", randomDate(), "City" + randomNum(1, 100), "Street" + randomNum(1, 100), randomNum(1, 100) + ""};
             allLines.add(record);
         }
         writer.writeAll(allLines);
@@ -29,14 +29,14 @@ public class Generator {
     }
 
     static void genType2(String path, int recordNum) throws IOException {
-        for (CustomerName name: CustomerName.values()) {
+        for (int i = 0; i < recordNum; i++) {
             List<String[]> allLines = new ArrayList();
-            allLines.add(new String[]{"traffic", "date","address"});
-            CSVWriter writer = new CSVWriter(new FileWriter(path+"//"+name+".csv"));
-            for (int i = 0; i < recordNum; i++) {
-                String[] record = {randomNum(100, 1000) + "", randomDate(), "City" + randomNum(1, 100) + " Street" + randomNum(1, 100) + " " + randomNum(1, 100)};
-                allLines.add(record);
-            }
+            allLines.add(new String[]{"traffic", "date", "address"});
+            CSVWriter writer = new CSVWriter(new FileWriter(path + "//" + randomCustomer() + " " + (i*10) + ".csv"));
+
+            String[] record = {randomNum(100, 1000) + "", randomDate(), "City" + randomNum(1000, 1_000_000) + " Street" + randomNum(1, 100) + " " + randomNum(1, 100)};
+            allLines.add(record);
+
             writer.writeAll(allLines);
             writer.close();
         }
